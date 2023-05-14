@@ -6,7 +6,7 @@ const router = express.Router();
 
 // Get a list of 50 posts
 router.get("/", async (req, res) => {
-  let collection = await db.collection("cars");
+  let collection = await db.collection("GamesList");
   let results = await collection.find({})
     .limit(50)
     .toArray();
@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   let id=req.params.id
   id=id.slice(1) //remove the colon at the start 
-  let collection = await db.collection("cars");
+  let collection = await db.collection("GamesList");
   let query = {_id: ObjectId(id)};
 
   let result = await collection.findOne(query);
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
 
 // Add a new document to the collection
 router.post("/", async (req, res) => {
-  let collection = await db.collection("cars");
+  let collection = await db.collection("GamesList");
   let newDocument = req.body;
   newDocument.date = new Date();
   let result = await collection.insertOne(newDocument);
@@ -41,7 +41,7 @@ router.delete("/:id", async (req, res) => {
 
   const query = { _id: ObjectId(id) };
 
-  const collection = db.collection("cars");
+  const collection = db.collection("GamesList");
   let result = await collection.deleteOne(query);
 
   res.send(result).status(200);
